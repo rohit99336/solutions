@@ -18,7 +18,7 @@ composer require --dev barryvdh/laravel-ide-helper
 composer dump-autoload
 ```
 
-2. Check Composer.json File: <br>
+3. Check Composer.json File: <br>
 
    Ensure that the barryvdh/laravel-ide-helper package is listed in the require-dev section of your composer.json file. If it is not listed, add it manually:
 
@@ -28,7 +28,7 @@ composer dump-autoload
 }
 ```
 
-3. Check Service Provider: <br>
+4. Check Service Provider: <br>
 
    Ensure that the Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class service provider is listed in the providers section of your config/app.php file. If it is not listed, add it manually:
 
@@ -39,7 +39,7 @@ composer dump-autoload
 ]
 ```
 
-3. Clear Configuration Cache: <br>
+5. Clear Configuration Cache: <br>
 
    Clear the Laravel configuration cache to ensure that any changes made are reflected:
 
@@ -47,7 +47,7 @@ composer dump-autoload
 php artisan config:clear
 ```
 
-4. Check Composer Autoload: <br>
+6. Check Composer Autoload: <br>
 
    Ensure that the vendor/autoload.php file is included in your bootstrap/autoload.php file. If it is not included, add it manually:
 
@@ -55,7 +55,7 @@ php artisan config:clear
 require __DIR__.'/../vendor/autoload.php';
 ```
 
-5. Check Composer Scripts: <br>
+7. Check Composer Scripts: <br>
 
    Ensure that the post-update-cmd and post-install-cmd scripts are included in the scripts section of your composer.json file. If they are not included, add them manually:
 
