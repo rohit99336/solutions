@@ -1,5 +1,7 @@
 To send logic at scheduled times for different events in Laravel, you can use Laravel's task scheduling along with queues and jobs to manage the sending of logic at specified times. Here's an outline of how you can achieve this:
 
+### Laravel Task Scheduling [Laravel Docs](https://laravel.com/docs/10.x/scheduling)
+
 1. **Create a Job for your task:**
 
    Create a job using the Artisan command:
