@@ -8,12 +8,12 @@
 1. Enter project path and command to run in the corresponding fields. You can also set up the cron job to run at a specific time or date.
 ![Step 2]( ../hostinger/images/step2.png "step 2")
 
+for cpanel - cronjob command
 ```bash
-# for cpanel - cronjob command
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
+for hostinger - cronjob command
 ```bash
-# for hostinger - cronjob command
 /project_path/artisan schedule:run
 ```
 

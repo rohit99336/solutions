@@ -12,55 +12,55 @@ b. Press Enter to accept the default location and file name. Enter and re-enter 
 
 c. Go to the ssh access page in cpanel and click on manage ssh keys.
 
-![alt text](../images/step1.png "step 3")
+![alt text](../Godady/Images/cpanel/step1.png "step 3")
 
 e. Click on manage the keys button then click on authorize.
-![alt text](../images/step2.png "step 4")
-![alt text](../images/step6.png "step 5")
-![alt text](../images/step7.png "step 6")
+![alt text](../Godady/Images/cpanel/step2.png "step 4")
+![alt text](../Godady/Images/cpanel/step6.png "step 5")
+![alt text](../Godady/Images/cpanel/step7.png "step 6")
 
 f. make sure that the key is authorized and click view/download button.
 
-![alt text](../images/step8.png "step 7")
+![alt text](../Godady/Images/cpanel/step8.png "step 7")
 
 g. copy the key and paste it in your github account.
 
-![alt text](../images/step9.png "step 8")
+![alt text](../Godady/Images/cpanel/step9.png "step 8")
 
 h. Add the public key to your GitHub account:
 
 Go to GitHub > Settings > SSH and GPG keys.
 Click on "New SSH key" and paste the content of your ~/.ssh/id_rsa.pub file.
 
-![alt text](../images/step10.png "step 9")
-![alt text](../images/step11.png "step 10")
-![alt text](../images/step12.png "step 11")
-![alt text](../images/step13.png "step 12")
+![alt text](../Godady/Images/cpanel/step10.png "step 9")
+![alt text](../Godady/Images/cpanel/step11.png "step 10")
+![alt text](../Godady/Images/cpanel/step12.png "step 11")
+![alt text](../Godady/Images/cpanel/step13.png "step 12")
 
 i. Now you go to your cpanel and click on git version control.
 
-![alt text](../images/step15.png "step 13")
+![alt text](../Godady/Images/cpanel/step15.png "step 13")
 
 j. Click on create button and fill the form.
 
-![alt text](../images/step16.png "step 14")
+![alt text](../Godady/Images/cpanel/step16.png "step 14")
 
 k. Now you can see your repository in the list and copy the ssh url.
-![alt text](../images/step17.png "step 15")
+![alt text](../Godady/Images/cpanel/step17.png "step 15")
 
 ## Step 2: Cone and deploy your project
 
 a. paste the ssh url in cole url input and set deploy path and click on create button.
 
-![alt text](../images/step18.png "step 15")
+![alt text](../Godady/Images/cpanel/step18.png "step 15")
 
 b. Now you can see your repository in the list and click on manage button.
 
-![alt text](../images/step19.png "step 15")
+![alt text](../Godady/Images/cpanel/step19.png "step 15")
 
 c. Click on update from remote button.
 
-![alt text](../images/step20.png "step 15")
+![alt text](../Godady/Images/cpanel/step20.png "step 15")
 
 d. Now you can see your project files in the path that you set in step 2.
 
