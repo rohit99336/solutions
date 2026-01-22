@@ -42,3 +42,72 @@ Laravel के `.env` फ़ाइल में ये दो प्रॉपर
 2. **QUEUE_CONNECTION=database:** इसके लिए आपको `php artisan queue:table` और `php artisan migrate` कमांड चलानी होगी। इसके बाद आप `php artisan queue:work` कमांड चलाकर अपने बैकग्राउंड टास्क शुरू कर सकते हैं।
 
 **ध्यान दें:** चूंकि आपने पहले `public/admin` फोल्डर वाली समस्या बताई थी, तो याद रखें कि अगर आप `SESSION_DRIVER=database` रख रहे हैं, तो सुनिश्चित करें कि आपकी `sessions` टेबल डेटाबेस में मौजूद है।
+
+
+================================================================================
+
+सर्वर पर **Queue (क्यू)** और **Cron Jobs (क्रोन जॉब्स)** को ऑटोमैटिक तरीके से चलाने के लिए आपको दो मुख्य चीजों को समझना होगा। अगर आप इन्हें मैन्युअल चलाकर छोड़ देंगे, तो टर्मिनल बंद होते ही ये काम करना बंद कर देंगे।
+
+यहाँ उन्हें हमेशा चालू रखने का सही तरीका दिया गया है:
+
+---
+
+### 1. Cron Jobs सेटअप करना (Task Scheduling)
+
+Laravel में आपको हर काम के लिए अलग-अलग क्रोन जॉब सेट करने की जरूरत नहीं होती। आपको बस सर्वर पर **एक मुख्य क्रोन** सेट करना होता है जो हर मिनट चलता है।
+
+**स्टेप्स:**
+
+1. अपने सर्वर के टर्मिनल में `crontab -e` टाइप करें।
+2. फाइल के सबसे नीचे यह लाइन जोड़ें:
+`* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`
+*(यहाँ `/path-to-your-project` की जगह अपने प्रोजेक्ट का असली पाथ डालें)*
+
+**फायदा:** अब आप अपने Laravel कोड के `routes/console.php` (या `app/Console/Kernel.php` पुराने वर्जन में) से ही तय कर सकते हैं कि कौन सा काम कब होगा।
+
+---
+
+### 2. Queue Workers को हमेशा चालू रखना (Supervisor)
+
+चूंकि आपने `QUEUE_CONNECTION=database` रखा है, इसलिए जॉब्स को प्रोसेस करने के लिए `php artisan queue:work` कमांड चलानी पड़ती है। लेकिन सर्वर पर इसे "Supervisor" के जरिए चलाया जाता है ताकि अगर कमांड किसी वजह से रुक जाए, तो वह उसे **अपने आप दोबारा चालू** कर दे।
+
+**स्टेप्स (Ubuntu/VPS पर):**
+
+1. Supervisor इंस्टॉल करें: `sudo apt-get install supervisor`
+2. एक कॉन्फ़िगरेशन फाइल बनाएं: `/etc/supervisor/conf.d/laravel-worker.conf`
+3. उसमें यह कोड डालें:
+
+```ini
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /path-to-your-project/artisan queue:work database --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/path-to-your-project/storage/logs/worker.log
+
+```
+
+---
+
+### 3. शेयर्ड होस्टिंग (Shared Hosting) पर कैसे करें?
+
+अगर आप **Hostinger** या किसी शेयर्ड होस्टिंग पर हैं, तो वहाँ आप **Supervisor इंस्टॉल नहीं कर सकते**। वहां आपको "जुगाड़" करना पड़ता है:
+
+* **Cron Job के जरिए:** आप होस्टिंग के 'Cron Jobs' सेक्शन में जाएं और हर मिनट `php artisan queue:work --stop-when-empty` चलाने का कमांड सेट करें।
+* इससे क्या होगा? हर मिनट क्रोन चलेगा, चेक करेगा कि क्या कोई काम (Job) पेंडिंग है, उसे पूरा करेगा और फिर बंद हो जाएगा।
+
+---
+
+### सारांश (Summary)
+
+| फीचर | सही तरीका (VPS) | जुगाड़ (Shared) |
+| --- | --- | --- |
+| **Cron Job** | `crontab -e` में एक लाइन डालें | Hosting Dashboard में Cron डालें |
+| **Queue** | **Supervisor** का उपयोग करें | Cron के साथ `--stop-when-empty` चलाएं |
+
+**मेरी सलाह:** चूंकि आप CRM/ERP जैसा महत्वपूर्ण प्रोजेक्ट बना रहे हैं, तो **Supervisor (VPS)** का ही उपयोग करें। इससे कभी भी डेटा मिस नहीं होगा और ईमेल या भारी रिपोर्ट्स हमेशा समय पर प्रोसेस होंगी।
