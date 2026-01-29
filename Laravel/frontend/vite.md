@@ -1,5 +1,5 @@
-ठीक है 🙂
-**Eternal HTML theme** (या कोई भी HTML theme) को **Laravel + Vite** में **CSS/JS** के साथ सही तरीके से कैसे integrate करते हैं।
+🙂
+**Eternal HTML theme** (या कोई भी HTML theme) को **Laravel + Vite** में **CSS/JS** के साथ सही तरीके integration -
 
 ---
 
